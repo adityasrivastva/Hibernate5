@@ -25,21 +25,7 @@ public class HibernateUtil {
 
 				// Create registry builder
 				StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder().configure();
-				//StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
-/*
-				// Hibernate settings equivalent to hibernate.cfg.xml's properties
-				Map<String, String> settings = new HashMap<>();
-				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-				settings.put(Environment.URL, "jdbc:mysql://localhost:3306/userdb");
-				settings.put(Environment.USER, "root");
-				settings.put(Environment.PASS, "maa2319");
-				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
-				settings.put(Environment.SHOW_SQL, "true");
-				settings.put(Environment.HBM2DDL_AUTO, "update");
-
-				// Apply Settings
-				registryBuilder.applySettings(settings);
-*/
+				
 				// Create registry
 				registry = registryBuilder.build();
 
@@ -78,3 +64,20 @@ public class HibernateUtil {
 	}
 
 }
+
+
+//StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
+/*
+				// Hibernate settings equivalent to hibernate.cfg.xml's properties
+				Map<String, String> settings = new HashMap<>();
+				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+				settings.put(Environment.URL, "jdbc:mysql://localhost:3306/userdb");
+				settings.put(Environment.USER, "root");
+				settings.put(Environment.PASS, "maa2319");
+				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+				settings.put(Environment.SHOW_SQL, "true");
+				settings.put(Environment.HBM2DDL_AUTO, "update");
+
+				// Apply Settings
+				registryBuilder.applySettings(settings);
+*/
