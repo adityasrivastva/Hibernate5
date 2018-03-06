@@ -14,7 +14,7 @@ public class DirtyCheckingClientTest {
 			Employee employee= session.get(Employee.class, 1);
 			if (employee !=null) {
 				session.getTransaction().begin();
-				employee.setSalary(100000.00);
+				employee.setSalary(200012.00);
 				//session.update(employee);
 				session.getTransaction().commit();	
 				employee.setEmployeeName("Adi");
