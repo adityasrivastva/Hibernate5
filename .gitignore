@@ -24,4 +24,6 @@ hs_err_pid*
 /HibernateDirtyChecking/target
 /HibernateCRUD/target
 /HibernateDAOImplementation/target
+/HibernateValueObjectPart2/target
+/HibernateValueObject/target
 
