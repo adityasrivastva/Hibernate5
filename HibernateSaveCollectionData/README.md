@@ -3,12 +3,13 @@
 package com.aditya.hibernate.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,22 +49,10 @@ public class Employee implements Serializable {
 	@Column(name="salary")
 	private Double salary;
 	
-	@Embedded
-	@AttributeOverrides(value=
-			{@AttributeOverride(name="street", column= @Column(name= "home_street_name", length=50)),
-	        @AttributeOverride(name="city", column=@Column(name="home_city_name", length=50)),
-	        @AttributeOverride(name="state", column=@Column(name="home_state_name")),
-	        @AttributeOverride(name="pincode", column=@Column(name="home_pin_code")),
-	    })
-	private Address homeaddress;
-	@Embedded
-	@AttributeOverrides(value=
-			{@AttributeOverride(name="street", column= @Column(name= "office_street_name", length=50)),
-	        @AttributeOverride(name="city", column=@Column(name="office_city_name", length=50)),
-	        @AttributeOverride(name="state", column=@Column(name="office_state_name")),
-	        @AttributeOverride(name="pincode", column=@Column(name="office_pin_code")),
-	    })
-	private Address officeaddress;
+	@ElementCollection
+	private Collection<Address> addresses = new HashSet<>();
+	
+	
 
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -104,38 +93,27 @@ public class Employee implements Serializable {
 	public void setSalary(Double salary) {
 		this.salary = salary;
 	}
-	
-	
+
+	public Collection<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Collection<Address> addresses) {
+		this.addresses = addresses;
+	}
 	
 	
 
-	public Address getHomeaddress() {
-		return homeaddress;
-	}
-
-	public void setHomeaddress(Address homeaddress) {
-		this.homeaddress = homeaddress;
-	}
-
-	public Address getOfficeaddress() {
-		return officeaddress;
-	}
-
-	public void setOfficeaddress(Address officeaddress) {
-		this.officeaddress = officeaddress;
-	}
 
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", email=" + email + ", doj="
-				+ doj + ", salary=" + salary + ", homeaddress=" + homeaddress + ", officeaddress=" + officeaddress
-				+ "]";
+				+ doj + ", salary=" + salary + ", addresses=" + addresses + "]";
 	}
 
 	
-	
-	
 }
+
 
 ```
 # Address Class
@@ -262,37 +240,51 @@ public class ClientTest {
 # Output
 ```
 Hibernate: 
-    
-    create table employee_table (
-       employee_id integer not null auto_increment,
+ create table Employee_addresses (
+   Employee_employee_id integer not null,
+   city_name varchar(50),
+   pin_code bigint,
+   state_name varchar(255),
+   street_name varchar(50)
+  ) engine=MyISAM
+Hibernate: 
+  create table employee_table (
+    employee_id integer not null auto_increment,
         date_of_joining datetime,
         email varchar(255),
         employee_name varchar(100) not null,
-        home_city_name varchar(50),
-        home_pin_code bigint,
-        home_state_name varchar(255),
-        home_street_name varchar(50),
-        office_city_name varchar(50),
-        office_pin_code bigint,
-        office_state_name varchar(255),
-        office_street_name varchar(50),
         salary double precision,
         primary key (employee_id)
     ) engine=MyISAM
 Hibernate: 
-    
     alter table employee_table 
        drop index UK_2casspobvavvi9s23312f9mhm
 Hibernate: 
-    
     alter table employee_table 
        add constraint UK_2casspobvavvi9s23312f9mhm unique (email)
 Hibernate: 
-    insert 
-    into
+    alter table Employee_addresses 
+       add constraint FKio6h60n7giag98ce5amynjdt8 
+       foreign key (Employee_employee_id) 
+       references employee_table (employee_id)
+Hibernate: 
+    insert into
         employee_table
-        (date_of_joining, email, employee_name, home_city_name, home_pin_code, home_state_name, home_street_name, office_city_name, office_pin_code, office_state_name, office_street_name, salary) 
+        (date_of_joining, email, employee_name, salary) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?)
 Employee is added with id:1
+Hibernate: 
+    insert into
+        Employee_addresses
+        (Employee_employee_id, city_name, pin_code, state_name, street_name) 
+    values(?, ?, ?, ?, ?)
+Hibernate: 
+    insert into
+        Employee_addresses
+        (Employee_employee_id, city_name, pin_code, state_name, street_name) 
+    values (?, ?, ?, ?, ?)
+
 ```
+
+
