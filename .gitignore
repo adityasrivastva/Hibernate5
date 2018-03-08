@@ -26,4 +26,6 @@ hs_err_pid*
 /HibernateDAOImplementation/target
 /HibernateValueObjectPart2/target
 /HibernateValueObject/target
+/HibernateSaveCollectionData/target
+/HibernateSaveCollectionData2/target
 
