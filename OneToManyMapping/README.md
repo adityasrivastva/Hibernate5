@@ -1,4 +1,4 @@
-#Case 1
+# Case 1
 
 
 # Employee Class
@@ -318,7 +318,7 @@ Hibernate:
 ```
 
 
-#Case 2
+# Case 2
 
 
 # Employee Class
