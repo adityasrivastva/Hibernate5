@@ -71,6 +71,12 @@ public class Employee extends Person{
 	public BigDecimal getBonus() {
 		return bonus;
 	}
+	
+	@Override
+	public String toString() {
+		return "Employee [salary=" + salary + ", doj=" + doj + ", deptName=" + deptName + ", bonus=" + bonus
+				+ ", email=" + email + "]"+ super.toString();
+	}
 }
 ```
 
@@ -131,6 +137,11 @@ public class Person {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", gender=" + gender + "]";
+	}
 }
 ```
 
@@ -176,6 +187,11 @@ public class Student extends Person {
 	}
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
+	}
+	
+	@Override
+	public String toString() {
+		return "Student [schoolName=" + schoolName + ", fee=" + fee + ", sectionName=" + sectionName + "]"+ super.toString();
 	}
 }
 
@@ -381,5 +397,71 @@ Hibernate:
         (gender, name, bonus, dept_name, date_of_joining, email, salary, record_type) 
     values
         (?, ?, ?, ?, ?, ?, ?, 'employee_type')
+
+```
+
+# FetchDataClient.java
+```
+package com.aditya.hibernate.client;
+
+import java.text.ParseException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
+import com.aditya.hibernate.model.Employee;
+import com.aditya.hibernate.model.Person;
+import com.aditya.hibernate.model.Student;
+import com.aditya.hibernate.util.HibernateUtil;
+
+public class FetchDataClient {
+
+	public static void main(String[] args) throws ParseException {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+			Person person = session.get(Person.class, 3);
+			if (person instanceof Person && !(person instanceof Employee) && !(person instanceof Student)) {
+				System.out.println(person);
+			} else if (person instanceof Person && (person instanceof Employee)) {
+				Employee employee = (Employee) person;
+				System.out.println(employee);
+			} else if (person instanceof Person && (person instanceof Student)) {
+				Student student = (Student) person;
+				System.out.println(student);
+			}
+
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+```
+
+# Output:
+
+```
+Hibernate: 
+    select
+        person0_.id as id2_0_0_,
+        person0_.gender as gender3_0_0_,
+        person0_.name as name4_0_0_,
+        person0_.bonus as bonus5_0_0_,
+        person0_.dept_name as dept_nam6_0_0_,
+        person0_.date_of_joining as date_of_7_0_0_,
+        person0_.email as email8_0_0_,
+        person0_.salary as salary9_0_0_,
+        person0_.fee as fee10_0_0_,
+        person0_.school_name as school_11_0_0_,
+        person0_.section_name as section12_0_0_,
+        person0_.record_type as record_t1_0_0_ 
+    from
+        person_table person0_ 
+    where
+        person0_.id=?
+Employee [salary=80000.29, doj=2015-12-18 00:00:00.0, deptName=IT, bonus=277.389, email=dipesh.cs@gmail.com]Person [id=3, name=Dipesh, gender=Male]
+
 
 ```

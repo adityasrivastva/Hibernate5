@@ -37,4 +37,10 @@ public class Student extends Person {
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
 	}
+	@Override
+	public String toString() {
+		return "Student [schoolName=" + schoolName + ", fee=" + fee + ", sectionName=" + sectionName + "]"+ super.toString();
+	}
+	
+	
 }
