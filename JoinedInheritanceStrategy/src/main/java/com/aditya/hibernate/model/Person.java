@@ -52,4 +52,11 @@ public class Person {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", gender=" + gender + "]";
+	}
+	
+	
 }
